@@ -5,11 +5,6 @@ $(() => {
     let table = $('.table tbody');
     getBooks(table);
 
-    table.on('click', 'tr td.book-title', (e) => {
-        let description = $(e.target).parent().next()
-        $(description).toggle(200)
-    });
-
     let form = $('#add-book');
     form.on('submit', (e) => {
         e.preventDefault()
@@ -70,21 +65,23 @@ function getBooks(table) {
         table.html('');
         for (let book of response) {
             table.append(`
-                <tr>
+                <tr data-toggle="collapse" data-target="#book-details${book.id}">
                     <th scope="row">${book.id}</th>
                     <td class="book-title">${book.title}</td>
                     <td>${book.isbn}</td>
                     <td><button class="btn btn-danger" data-id='${book.id}'>Usuń</button></td>
                 </tr>
-                <tr class="book-description" style="display: none">
+                <tr>
                     <td colspan="4">
-                    <div class="card card-body" style="background: #fefefe">
-                        ID: ${book.id}<hr>
-                        Tytuł: ${book.title}<hr>
-                        ISBN: ${book.isbn}<hr>
-                        Autor: ${book.author}<hr>
-                        Wydawca: ${book.publisher}
-                    </div>
+                        <div class="collapse" id="book-details${book.id}">
+                            <div class="card card-body" style="background: #fefefe">
+                                ID: ${book.id}<hr>
+                                Tytuł: ${book.title}<hr>
+                                ISBN: ${book.isbn}<hr>
+                                Autor: ${book.author}<hr>
+                                Wydawca: ${book.publisher}
+                            </div>
+                        </div>
                     </td>
                 </tr>
             `)
