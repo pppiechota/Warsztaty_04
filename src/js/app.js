@@ -58,29 +58,33 @@ function deleteBook(id, table) {
     $.ajax({
         url: URL + "/books/" + id,
         type: "DELETE"
-    }).done((resp) => {
+    }).done((response) => {
         getBooks(table)
     })
 }
 
 function getBooks(table) {
-    $.ajax({url: URL + "/books"}).done((response) => {
+    $.ajax({
+        url: URL + "/books"
+    }).done((response) => {
         table.html('');
         for (let book of response) {
             table.append(`
                 <tr>
-                    <th>${book.id}</th>
+                    <th scope="row">${book.id}</th>
                     <td class="book-title">${book.title}</td>
                     <td>${book.isbn}</td>
                     <td><button class="btn btn-danger" data-id='${book.id}'>Usuń</button></td>
                 </tr>
                 <tr class="book-description" style="display: none">
                     <td colspan="4">
-                        <div>${book.author}</div>
-                        <div>${book.title}</div>
-                        <div>${book.publisher}</div>
-                        <div>${book.isbn}</div>
-                        <div>${book.type}</div>
+                    <div class="card card-body" style="background: #fefefe">
+                        ID: ${book.id}<hr>
+                        Tytuł: ${book.title}<hr>
+                        ISBN: ${book.isbn}<hr>
+                        Autor: ${book.author}<hr>
+                        Wydawca: ${book.publisher}
+                    </div>
                     </td>
                 </tr>
             `)
